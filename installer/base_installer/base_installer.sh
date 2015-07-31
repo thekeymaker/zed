@@ -44,7 +44,7 @@ zfs create ${POOL_NAME}/ROOT/zed-1
 zfs umount -a
 
 zfs set mountpoint=/ ${POOL_NAME}/ROOT/zed-1
-zfs set bootfs=/ ${POOL_NAME}/ROOT/zed-1 $POOL_NAME
+zfs set bootfs=${POOL_NAME}/ROOT/zed-1 $POOL_NAME
 
 zpool export $POOL_NAME
 
@@ -55,7 +55,17 @@ mount ${HARDDRIVE_PATH}-part1 /mnt/boot/grub
 
 debootstrap trusty /mnt
 
+cp /etc/hostname /mnt/etc/
+cp /etc/hosts /mnt/etc/
 
+echo "${HARDDRIVE_PATH}-part1  /boot/grub  auto  defaults  0  1" >> /mnt/etc/fstab
+
+
+mount --bind /dev  /mnt/dev
+mount --bind /proc /mnt/proc
+mount --bind /sys  /mnt/sys
+
+#chroot /mnt /bin/bash --login
 
 
 
