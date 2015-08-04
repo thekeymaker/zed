@@ -1,6 +1,16 @@
 #!/bin/bash
 # base_installer.sh
 
+
+function check_exit_code()
+{
+	RESULT=$?
+	if [ "$RESULT" -ne 0 ]; then
+		echo "Installer failed"
+		exit "$RESULT"
+	fi
+}
+
 POOL_NAME=rpool
 
 WELCOME_TEXT=`cat <<EOF
@@ -25,6 +35,8 @@ echo $HARDDRIVE_PATH
 apt-add-repository --yes ppa:zfs-native/stable
 apt-get update
 apt-get install --yes debootstrap ubuntu-zfs
+
+check_exit_code
 
 
 # Format HD
