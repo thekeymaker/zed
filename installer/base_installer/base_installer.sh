@@ -1,6 +1,7 @@
 #!/bin/bash
 # base_installer.sh
 
+WD=`pwd`
 
 function check_exit_code()
 {
@@ -84,7 +85,6 @@ cp /etc/hosts /mnt/etc/
 
 echo "${HARDDRIVE_PATH}-part1  /boot/grub  auto  defaults  0  1" >> /mnt/etc/fstab
 
-
 mount --bind /dev  /mnt/dev
 mount --bind /proc /mnt/proc
 mount --bind /sys  /mnt/sys
@@ -92,7 +92,11 @@ mount --bind /sys  /mnt/sys
 #cat /etc/modprobe.d/zfs-arc-max.conf 
 #options zfs zfs_arc_max=1073741824
 
-#chroot /mnt /bin/bash --login
+#Copy`
+cd $WD
+cp ./wedge_installer.sh /mnt
+
+chroot /mnt /bin/bash --login
 
 
 
