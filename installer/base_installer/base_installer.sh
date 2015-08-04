@@ -33,11 +33,14 @@ apt-get install --yes debootstrap ubuntu-zfs
 echo "Formating HD"
 (echo g; echo n; echo 1; echo; echo +2G; echo n; echo 2; echo; echo +256M; echo n; echo 3; echo; echo; echo t; echo 1; echo 14; echo t; echo 2; echo 4; echo p; echo w) | fdisk $HARDDRIVE_PATH
 
+sync
 echo
 echo "time format"
-
+sleep 2
 mkswap -L swap ${HARDDRIVE_PATH}-part1
+sleep 2
 mkfs.ext3 ${HARDDRIVE_PATH}-part2
+sleep 2
 
 echo
 echo
@@ -53,7 +56,7 @@ zfs create ${POOL_NAME}/ROOT/zed-1
 zfs umount -a
 
 zfs set mountpoint=/ ${POOL_NAME}/ROOT/zed-1
-zpool set bootfs=${POOL_NAME}/ROOT/zed-1 $POOL_NAM export $POOL_NAME
+zpool set bootfs=${POOL_NAME}/ROOT/zed-1 $POOL_NAME
 	
 zpool export $POOL_NAME
 
