@@ -1,7 +1,7 @@
 #!/bin/bash
 # base_installer.sh
 
-POOL_NAME="zpool"
+POOL_NAME=rpool
 
 WELCOME_TEXT=`cat <<EOF
 Welcome to Zed Base Installer!
@@ -39,9 +39,10 @@ echo "time format"
 mkswap -L swap ${HARDDRIVE_PATH}-part1
 mkfs.ext3 ${HARDDRIVE_PATH}-part2
 
+echo
+echo
 
 #Label disks
-POOL_NAME=rpool
 
 zpool create -d -o feature@async_destroy=enabled -o feature@empty_bpobj=enabled -o feature@lz4_compress=enabled -o ashift=12 -O compression=lz4 $POOL_NAME ${HARDDRIVE_PATH}-part3
 # zpool export rpool
