@@ -44,7 +44,7 @@ check_exit_code
 #Prompt would be nice
 # Add swap/boot/ and root
 echo "Formating HD"
-parted -a optimal ${HARDDRIVE_PATH} < partitions.txt
+parted -a optimal ${HARDDRIVE_PATH} < ${WD}/partitions.txt
 
 sync
 echo
