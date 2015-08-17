@@ -44,7 +44,7 @@ check_exit_code
 #Prompt would be nice
 # Add swap/boot/ and root
 echo "Formating HD"
-(echo g; echo n; echo 1; echo; echo +2G; echo n; echo 2; echo; echo +256M; echo n; echo 3; echo; echo; echo t; echo 1; echo 14; echo t; echo 2; echo 4; echo p; echo w) | fdisk $HARDDRIVE_PATH
+parted < partitions.txt
 
 sync
 echo
