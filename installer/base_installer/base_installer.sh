@@ -75,8 +75,8 @@ zpool export $POOL_NAME
 
 zpool import -d /dev/disk/by-id -R /mnt $POOL_NAME
 
-mkdir -p /mnt/boot/grub
-mount ${HARDDRIVE_PATH}-part2 /mnt/boot/grub
+mkdir -p /mnt/boot
+mount ${HARDDRIVE_PATH}-part2 /mnt/boot/
 
 debootstrap trusty /mnt
 
