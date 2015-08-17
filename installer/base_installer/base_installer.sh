@@ -44,13 +44,13 @@ check_exit_code
 #Prompt would be nice
 # Add swap/boot/ and root
 echo "Formating HD"
-parted < partitions.txt
+parted -a optimal ${HARDDRIVE_PATH} < partitions.txt
 
 sync
 echo
 echo "time format"
 sleep 2
-mkswap -L swap ${HARDDRIVE_PATH}-part1
+#mkswap -L swap ${HARDDRIVE_PATH}-part1
 sleep 2
 mkfs.ext3 ${HARDDRIVE_PATH}-part2
 sleep 2
