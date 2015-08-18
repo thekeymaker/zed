@@ -94,7 +94,7 @@ mount --bind /sys  /mnt/sys
 
 #Setup neede items for grub
 HARDDRIVE=`basename ${HARDDRIVE_PATH}`
-ln -s ${HARDDRIVE_PATH} /dev/${HARDDRIVE}
+ln -s ${HARDDRIVE_PATH} /dev/${HARDDRIVE}-part3
 
 
 #Copy`
