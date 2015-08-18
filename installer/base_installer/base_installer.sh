@@ -92,9 +92,19 @@ mount --bind /sys  /mnt/sys
 #cat /etc/modprobe.d/zfs-arc-max.conf 
 #options zfs zfs_arc_max=1073741824
 
+#Setup neede items for grub
+HARDDRIVE=`basename ${HARDDRIVE_PATH}`
+ln -a ${HARDDRIVE_PATH} /dev/${HARDDRIVE}
+
+#this should be cleaned up later
+#todo
+
+
 #Copy`
 cd $WD
 cp ./wedge_installer.sh /mnt
+
+exit
 
 chroot /mnt /bin/bash --login
 
