@@ -94,10 +94,7 @@ mount --bind /sys  /mnt/sys
 
 #Setup neede items for grub
 HARDDRIVE=`basename ${HARDDRIVE_PATH}`
-ln -a ${HARDDRIVE_PATH} /dev/${HARDDRIVE}
-
-#this should be cleaned up later
-#todo
+ln -s ${HARDDRIVE_PATH} /dev/${HARDDRIVE}
 
 
 #Copy`
