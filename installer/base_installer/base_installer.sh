@@ -104,6 +104,8 @@ echo "Chroot!"
 chroot /mnt /bin/bash ./wedge_installer.sh
 #chroot /mnt /bin/bash --login
 
+echo "Finished!"
+
 
 
 
