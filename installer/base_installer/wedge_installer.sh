@@ -5,6 +5,9 @@ locale-gen en_US.UTF-8
 apt-get update
 apt-get install --yes ubuntu-minimal software-properties-common
 
+# Prevent grub from asking to install
+export DEBIAN_FRONTEND=noninteractive
+
 apt-add-repository --yes ppa:zfs-native/stable
 apt-get update
 apt-get install --yes --no-install-recommends linux-image-generic linux-headers-generic
