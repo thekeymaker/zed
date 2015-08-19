@@ -94,16 +94,15 @@ mount --bind /sys  /mnt/sys
 
 #Setup neede items for grub
 HARDDRIVE=`basename ${HARDDRIVE_PATH}`
-ln -s ${HARDDRIVE_PATH} /dev/${HARDDRIVE}
-
+ln -s ${HARDDRIVE_PATH} /dev/${HARDDRIVE}-part3
 
 #Copy`
 cd $WD
 cp ./wedge_installer.sh /mnt
 
-exit
-
-chroot /mnt /bin/bash --login
+echo "Chroot!"
+chroot /mnt /bin/bash ./wedge_installer.sh
+#chroot /mnt /bin/bash --login
 
 
 
