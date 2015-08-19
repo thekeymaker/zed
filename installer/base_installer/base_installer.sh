@@ -100,6 +100,8 @@ ln -s ${HARDDRIVE_PATH} /dev/${HARDDRIVE}-part3
 cd $WD
 cp ./wedge_installer.sh /mnt
 
+echo "Chroot!"
+chroot /mnt /bin/bash ./wedge_installer.sh
 #chroot /mnt /bin/bash --login
 
 
