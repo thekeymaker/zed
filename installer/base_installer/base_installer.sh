@@ -114,6 +114,9 @@ echo "Chroot!"
 chroot /mnt /bin/bash ./wedge_installer.sh
 #chroot /mnt /bin/bash --login
 
+# Remove wedge script
+rm -f /mnt/wedge_installer.sh
+
 echo "Finished!"
 
 
