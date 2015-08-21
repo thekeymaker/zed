@@ -12,6 +12,14 @@ function check_exit_code()
 	fi
 }
 
+function check_if_user_is_root()
+{
+	if [ `id -un` != "root" ]; then
+		echo "You need root privileges"
+		exit 2
+	fi
+}
+
 POOL_NAME=rpool
 
 WELCOME_TEXT=`cat <<EOF
@@ -21,6 +29,8 @@ In the following file browser please select the hard
 drive to install the system too.
 EOF
 `
+
+check_if_user_is_root
 
 echo -n "$WELCOME_TEXT" | zenity --title "WELCOME" --text-info --width=500 --height=400
 
