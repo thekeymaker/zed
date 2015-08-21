@@ -93,7 +93,7 @@ debootstrap trusty /mnt
 cp /etc/hostname /mnt/etc/
 cp /etc/hosts /mnt/etc/
 
-echo "${HARDDRIVE_PATH}-part1  /boot/grub  auto  defaults  0  1" >> /mnt/etc/fstab
+echo "${HARDDRIVE_PATH}-part2  /boot  auto  defaults  0  1" >> /mnt/etc/fstab
 
 mount --bind /dev  /mnt/dev
 mount --bind /proc /mnt/proc
