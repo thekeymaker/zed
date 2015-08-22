@@ -35,14 +35,38 @@ apt-get install --yes ubuntu-gnome-desktop
 locale-gen
 localectl set-locale LANG="en_US.UTF-8"
 
-# Set users and passwords
-echo
-echo "Set Root Password"
-passwd root
+
+#ENTRY=`zenity --password --username`
+#
+#case $? in
+#         0)
+#	 	echo "User Name: `echo $ENTRY | cut -d'|' -f1`"
+#	 	echo "Password : `echo $ENTRY | cut -d'|' -f2`"
+#		;;
+#         1)
+#                echo "Stop login.";;
+#        -1)
+#                echo "An unexpected error has occurred.";;
+#esac
+
+ENTRY=`zenity --forms --title="Install Info" --text="Please fill in all information below:" --add-entry="Hostname:" --add-password="Root Password:" --add-entry="Username:" --add-password="User Password:"`
+
+HOSTNAME=`echo $ENTRY | cut -d'|' -f1`
+ROOTPASS=`echo $ENTRY | cut -d'|' -f2`
+USERNAME=`echo $ENTRY | cut -d'|' -f3`
+USERPASS=`echo $ENTRY | cut -d'|' -f4`
+
+# Change hostname
+echo $HOSTNAME > /etc/hostname
+
+# Change Root Password
+echo "root:$ROOTPASS" | chpasswd
+
+# Add User
+adduser $USERNAME --gecos"${USERNAME},,," --disabled-password
+echo "$USERNAME:$USERPASS" | chpasswd
 
 echo
-echo "Setup User"
-adduser user1
-echo
+echo "Exiting Chroot"
 
 
