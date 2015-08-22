@@ -35,6 +35,14 @@ apt-get install --yes ubuntu-gnome-desktop
 locale-gen
 localectl set-locale LANG="en_US.UTF-8"
 
+# Set users and passwords
+echo
+echo "Set Root Password"
 passwd root
+
+echo
+echo "Setup User"
+adduser user1
+echo
 
 
