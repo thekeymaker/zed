@@ -119,6 +119,9 @@ chroot /mnt /bin/bash ./wedge_installer.sh
 # Remove wedge script
 rm -f /mnt/wedge_installer.sh
 
+# Create snapshot of system
+zfs snapshot ${POOL_NAME}/ROOT/zed-1@init
+
 echo "Finished!"
 
 
