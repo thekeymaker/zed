@@ -25,7 +25,7 @@ sed -i '/GRUB_CMDLINE_LINUX_DEFAULT/c\GRUB_CMDLINE_LINUX_DEFAULT="boot=zfs rpool
 update-grub
 
 # Install Gnome3
-sed -i '/main/c\main universe' /etc/apt/sources.list
+sed -i -e 's/main/main universe/g' /etc/apt/sources.list
 apt-get update
 apt-get install --yes ubuntu-gnome-desktop
 
