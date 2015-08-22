@@ -3,6 +3,8 @@
 
 WD=`pwd`
 
+RELEASE="vivid"
+
 function check_exit_code()
 {
 	RESULT=$?
@@ -88,7 +90,7 @@ zpool import -d /dev/disk/by-id -R /mnt $POOL_NAME
 mkdir -p /mnt/boot
 mount ${HARDDRIVE_PATH}-part2 /mnt/boot/
 
-debootstrap trusty /mnt
+debootstrap $RELEASE /mnt
 
 cp /etc/hostname /mnt/etc/
 cp /etc/hosts /mnt/etc/

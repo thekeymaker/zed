@@ -21,7 +21,13 @@ grub-install /dev/sda
 #Fix grub boot parameters
 sed -i '/GRUB_CMDLINE_LINUX_DEFAULT/c\GRUB_CMDLINE_LINUX_DEFAULT="boot=zfs rpool=rpool bootfs=rpool/ROOT/zed-1"' /etc/default/grub
 
+
 update-grub
+
+# Install Gnome3
+sed -i '/main/c\main universe' /etc/apt/sources.list
+apt-get update
+apt-get install --yes ubuntu-gnome-desktop
 
 passwd root
 
