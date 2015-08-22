@@ -21,7 +21,19 @@ grub-install /dev/sda
 #Fix grub boot parameters
 sed -i '/GRUB_CMDLINE_LINUX_DEFAULT/c\GRUB_CMDLINE_LINUX_DEFAULT="boot=zfs rpool=rpool bootfs=rpool/ROOT/zed-1"' /etc/default/grub
 
+
 update-grub
+
+# Install Gnome3
+touch /etc/init.d/modemmanager  #File needed so gnome install doesn't fail
+sed -i -e 's/main/main universe/g' /etc/apt/sources.list
+apt-get update
+apt-get install --yes ubuntu-gnome-desktop
+
+
+# Set Location
+locale-gen
+localectl set-locale LANG="en_US.UTF-8"
 
 passwd root
 
