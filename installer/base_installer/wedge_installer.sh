@@ -14,6 +14,7 @@ apt-get install --yes --no-install-recommends linux-image-generic linux-headers-
 apt-get install --yes ubuntu-zfs
 apt-get install --yes grub2-common grub-pc
 apt-get install --yes zfs-initramfs
+apt-get install --yes vim
 apt-get --yes dist-upgrade
 
 grub-install /dev/sda
