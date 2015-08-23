@@ -50,7 +50,7 @@ hostnamectl set-hostname $HOSTNAME
 echo "root:$ROOTPASS" | chpasswd
 
 # Add User
-adduser $USERNAME --gecos"${USERNAME},,," --disabled-password
+adduser $USERNAME --gecos "${USERNAME},,," --disabled-password
 echo "$USERNAME:$USERPASS" | chpasswd
 addgroup $USERNAME sudo  # Add user to sudo group
 
