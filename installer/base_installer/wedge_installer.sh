@@ -1,4 +1,9 @@
 #!/bin/bash
+SYSNAME=`echo $1 | cut -d'|' -f1`
+HOSTNAME=`echo $1 | cut -d'|' -f2`
+ROOTPASS=`echo $1 | cut -d'|' -f3`
+USERNAME=`echo $1 | cut -d'|' -f4`
+USERPASS=`echo $1 | cut -d'|' -f5`
 
 # Setup apt-get
 locale-gen en_US.UTF-8
@@ -21,7 +26,7 @@ apt-get --yes dist-upgrade
 grub-install /dev/sda
 
 #Fix grub boot parameters
-sed -i '/GRUB_CMDLINE_LINUX_DEFAULT/c\GRUB_CMDLINE_LINUX_DEFAULT="boot=zfs rpool=rpool bootfs=rpool/ROOT/zed-1"' /etc/default/grub
+sed -i '/GRUB_CMDLINE_LINUX_DEFAULT/c\GRUB_CMDLINE_LINUX_DEFAULT="boot=zfs rpool=rpool bootfs=rpool/ROOT/${SYSNAME}"' /etc/default/grub
 
 
 update-grub
@@ -38,28 +43,8 @@ locale-gen
 localectl set-locale LANG="en_US.UTF-8"
 
 
-#ENTRY=`zenity --password --username`
-#
-#case $? in
-#         0)
-#	 	echo "User Name: `echo $ENTRY | cut -d'|' -f1`"
-#	 	echo "Password : `echo $ENTRY | cut -d'|' -f2`"
-#		;;
-#         1)
-#                echo "Stop login.";;
-#        -1)
-#                echo "An unexpected error has occurred.";;
-#esac
-
-ENTRY=`zenity --forms --title="Install Info" --text="Please fill in all information below:" --add-entry="Hostname:" --add-password="Root Password:" --add-entry="Username:" --add-password="User Password:"`
-
-HOSTNAME=`echo $ENTRY | cut -d'|' -f1`
-ROOTPASS=`echo $ENTRY | cut -d'|' -f2`
-USERNAME=`echo $ENTRY | cut -d'|' -f3`
-USERPASS=`echo $ENTRY | cut -d'|' -f4`
-
 # Change hostname
-echo $HOSTNAME > /etc/hostname
+hostnamectl set-hostname $HOSTNAME
 
 # Change Root Password
 echo "root:$ROOTPASS" | chpasswd
@@ -77,7 +62,7 @@ sed -i '/TimedLogin/c\TimedLogin = $USERNAME' /etc/gdm/custom.conf
 sed -i '/TimedLoginDelay/c\TimedLoginDelay = 10' /etc/gdm/custom.conf
 
 # Set Time Zone
-dpkg-reconfigure tzdata
+timedatectl set-timezone "America/Chicago"
 
 echo
 echo "Exiting Chroot"

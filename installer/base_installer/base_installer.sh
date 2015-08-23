@@ -5,6 +5,9 @@ WD=`pwd`
 
 RELEASE="vivid"
 SYSNAME="zed-1"
+CHROOTVAR+="${SYSNAME}|"
+echo $CHROOTVAR
+
 
 function check_exit_code()
 {
@@ -115,8 +118,18 @@ ln -s ${HARDDRIVE_PATH} /dev/${HARDDRIVE}-part4
 cd $WD
 cp ./wedge_installer.sh /mnt
 
+
+
+# Get user settings
+ENTRY=`zenity --forms --title="Install Info" --text="Please fill in all information below:" --add-entry="Hostname:" --add-password="Root Password:" --add-entry="Username:" --add-password="User Password:"`
+
+CHROOTVAR+="${ENTRY}|"
+
+
+
+# CHROOT!
 echo "Chroot!"
-chroot /mnt /bin/bash ./wedge_installer.sh
+chroot /mnt /bin/bash ./wedge_installer.sh $CHROOTVAR
 #chroot /mnt /bin/bash --login
 
 # Remove wedge script
