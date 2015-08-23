@@ -4,6 +4,7 @@
 WD=`pwd`
 
 RELEASE="vivid"
+SYSNAME="zed-1"
 
 function check_exit_code()
 {
@@ -60,28 +61,29 @@ parted -a optimal ${HARDDRIVE_PATH} < ${WD}/partitions.txt
 
 sync
 echo
-echo "time format"
+echo "Format Partitions"
 sleep 2
-#mkswap -L swap ${HARDDRIVE_PATH}-part1
+mkswap -L swap ${HARDDRIVE_PATH}-part3
 sleep 2
 mkfs.ext3 ${HARDDRIVE_PATH}-part2
 sleep 2
+swapon ${HARDDRIVE_PATH}-part3
 
 echo
 echo
 
 #Label disks
 
-zpool create -d -o feature@async_destroy=enabled -o feature@empty_bpobj=enabled -o feature@lz4_compress=enabled -o ashift=12 -O compression=lz4 $POOL_NAME ${HARDDRIVE_PATH}-part3
+zpool create -d -o feature@async_destroy=enabled -o feature@empty_bpobj=enabled -o feature@lz4_compress=enabled -o ashift=12 -O compression=lz4 $POOL_NAME ${HARDDRIVE_PATH}-part4
 # zpool export rpool
 
 zfs create ${POOL_NAME}/ROOT
-zfs create ${POOL_NAME}/ROOT/zed-1
+zfs create ${POOL_NAME}/ROOT/$SYSNAME
 
 zfs umount -a
 
-zfs set mountpoint=/ ${POOL_NAME}/ROOT/zed-1
-zpool set bootfs=${POOL_NAME}/ROOT/zed-1 $POOL_NAME
+zfs set mountpoint=/ ${POOL_NAME}/ROOT/$SYSNAME
+zpool set bootfs=${POOL_NAME}/ROOT/$SYSNAME $POOL_NAME
 	
 zpool export $POOL_NAME
 
@@ -96,6 +98,7 @@ cp /etc/hostname /mnt/etc/
 cp /etc/hosts /mnt/etc/
 
 echo "${HARDDRIVE_PATH}-part2  /boot  auto  defaults  0  1" >> /mnt/etc/fstab
+echo "${HARDDRIVE_PATH}-part3  none   swap  sw        0  0" >> /mnt/etc/fstab
 
 mount --bind /dev  /mnt/dev
 mount --bind /proc /mnt/proc
@@ -106,7 +109,7 @@ mount --bind /sys  /mnt/sys
 
 #Setup neede items for grub
 HARDDRIVE=`basename ${HARDDRIVE_PATH}`
-ln -s ${HARDDRIVE_PATH} /dev/${HARDDRIVE}-part3
+ln -s ${HARDDRIVE_PATH} /dev/${HARDDRIVE}-part4
 
 #Copy`
 cd $WD
@@ -120,7 +123,7 @@ chroot /mnt /bin/bash ./wedge_installer.sh
 rm -f /mnt/wedge_installer.sh
 
 # Create snapshot of system
-zfs snapshot ${POOL_NAME}/ROOT/zed-1@init
+zfs snapshot ${POOL_NAME}/ROOT/${SYSNAME}@init
 
 echo "Finished!"
 
