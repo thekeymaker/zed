@@ -74,6 +74,9 @@ sed -i '/TimedLoginEnable/c\TimedLoginEnable = true' /etc/gdm/custom.conf
 sed -i '/TimedLogin/c\TimedLogin = $USERNAME' /etc/gdm/custom.conf
 sed -i '/TimedLoginDelay/c\TimedLoginDelay = 10' /etc/gdm/custom.conf
 
+# Set Time Zone
+dpkg-reconfigure tzdata
+
 echo
 echo "Exiting Chroot"
 
