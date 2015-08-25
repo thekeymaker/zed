@@ -1,7 +1,5 @@
 #!/bin/bash
 
-touch log.txt
-
 function check_exit_code()
 {
 	RESULT=$?
