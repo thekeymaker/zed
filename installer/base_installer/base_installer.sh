@@ -38,12 +38,16 @@ EOF
 
 check_if_user_is_root
 
+# Welcome Screen
 echo -n "$WELCOME_TEXT" | zenity --title "WELCOME" --text-info --width=500 --height=400
 
+# Get user settings
+ENTRY=`zenity --forms --title="Install Info" --text="Please fill in all information below:" --add-entry="Hostname:" --add-password="Root Password:" --add-entry="Username:" --add-password="User Password:"`
+CHROOTVAR+="${ENTRY}|"
+
+# Set install hard drive
 cd /dev/disk/by-id
-
 HARDDRIVE_PATH=$(zenity --file-selection)
-
 echo $HARDDRIVE_PATH
 
 
@@ -120,10 +124,6 @@ cp ./wedge_installer.sh /mnt
 
 
 
-# Get user settings
-ENTRY=`zenity --forms --title="Install Info" --text="Please fill in all information below:" --add-entry="Hostname:" --add-password="Root Password:" --add-entry="Username:" --add-password="User Password:"`
-
-CHROOTVAR+="${ENTRY}|"
 
 
 
