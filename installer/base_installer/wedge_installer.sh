@@ -33,7 +33,7 @@ update-grub
 
 # Install Gnome3
 touch /etc/init.d/modemmanager  #File needed so gnome install doesn't fail
-sed -i -e 's/main/main universe/g' /etc/apt/sources.list
+sed -i -e 's/main/main multiverse universe/g' /etc/apt/sources.list
 apt-get update
 apt-get install --yes ubuntu-gnome-desktop
 
