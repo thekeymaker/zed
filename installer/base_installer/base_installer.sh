@@ -129,6 +129,8 @@ cp -r ./base_chroot /mnt
 
 
 
+# Create snapshot of system befor chroot for testing 
+zfs snapshot ${POOL_NAME}/ROOT/${SYSNAME}@bfchroot
 
 
 
@@ -144,7 +146,5 @@ rm -rf /mnt/base_chroot
 zfs snapshot ${POOL_NAME}/ROOT/${SYSNAME}@init
 
 echo "Finished!"
-
-
 
 

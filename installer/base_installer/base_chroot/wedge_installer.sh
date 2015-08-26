@@ -40,6 +40,10 @@ touch /etc/init.d/modemmanager  #File needed so gnome install doesn't fail
 sed -i -e 's/main/main multiverse universe/g' /etc/apt/sources.list
 apt-get update
 apt-get install --yes ubuntu-gnome-desktop
+
+# Create snapshot of system
+zfs snapshot ${POOL_NAME}/ROOT/${SYSNAME}@afgnome
+
 cp /base_chroot/resources/cubes.jpg /usr/share/backgrounds/gnome/
 cp /base_chroot/resources/dots.png /usr/share/backgrounds/gnome/
 #TODO fix
