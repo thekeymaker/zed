@@ -138,7 +138,7 @@ chroot /mnt /bin/bash /base_chroot/wedge_installer.sh $CHROOTVAR
 #chroot /mnt /bin/bash --login
 
 # Remove wedge script
-rm -ff /mnt/base_chroot
+rm -rf /mnt/base_chroot
 
 # Create snapshot of system
 zfs snapshot ${POOL_NAME}/ROOT/${SYSNAME}@init

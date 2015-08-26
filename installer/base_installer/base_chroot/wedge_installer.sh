@@ -40,9 +40,13 @@ touch /etc/init.d/modemmanager  #File needed so gnome install doesn't fail
 sed -i -e 's/main/main multiverse universe/g' /etc/apt/sources.list
 apt-get update
 apt-get install --yes ubuntu-gnome-desktop
-cp ./resources/cubs.jpg /usr/share/backgrounds/gnome/
-cp ./resources/dots.png /usr/share/backgrounds/gnome/
-dconf load ./gnome.settings
+cp /base_chroot/resources/cubes.jpg /usr/share/backgrounds/gnome/
+cp /base_chroot/resources/dots.png /usr/share/backgrounds/gnome/
+#TODO fix
+#dconf load /base_chroot/gnome.settings
+cd /usr/share/backgrounds/gnome/
+mv adwaita-day.jpg adwaita-day2.jpg
+ln -s ./cubes.jpg ./adwaita-day.jpg
 
 
 # Set Location
