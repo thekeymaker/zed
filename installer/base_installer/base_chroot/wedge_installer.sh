@@ -1,4 +1,5 @@
 #!/bin/bash
+locale-gen en_US.UTF-8
 
 # Enable debug mode
 set -x
@@ -14,7 +15,6 @@ apt-get install --yes dbus
 
 # Set Location
 localectl set-locale LANG="en_US.UTF-8"
-locale-gen en_US.UTF-8
 
 # Change hostname
 hostnamectl set-hostname $HOSTNAME
