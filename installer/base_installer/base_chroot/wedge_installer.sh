@@ -66,11 +66,11 @@ echo "$USERNAME:$USERPASS" | chpasswd
 addgroup $USERNAME sudo  # Add user to sudo group
 
 # Setup Auto Login For User
-sed -i '/AutomaticLoginEnable/c\AutomaticLoginEnable = true' /etc/gdm/custom.conf
-sed -i '/AutomaticLogin/c\AutomaticLogin = $USERNAME' /etc/gdm/custom.conf
-sed -i '/TimedLoginEnable/c\TimedLoginEnable = true' /etc/gdm/custom.conf
-sed -i '/TimedLogin/c\TimedLogin = $USERNAME' /etc/gdm/custom.conf
-sed -i '/TimedLoginDelay/c\TimedLoginDelay = 10' /etc/gdm/custom.conf
+sed -i "/AutomaticLoginEnable/c\AutomaticLoginEnable = true" /etc/gdm/custom.conf
+sed -i "/AutomaticLogin/c\AutomaticLogin = $USERNAME" /etc/gdm/custom.conf
+sed -i "/TimedLoginEnable/c\TimedLoginEnable = true" /etc/gdm/custom.conf
+sed -i "/TimedLogin/c\TimedLogin = $USERNAME" /etc/gdm/custom.conf
+sed -i "/TimedLoginDelay/c\TimedLoginDelay = 10" /etc/gdm/custom.conf
 
 # Set Time Zone
 timedatectl set-timezone "America/Chicago"
