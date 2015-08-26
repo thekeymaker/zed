@@ -122,7 +122,7 @@ ln -s ${HARDDRIVE_PATH} /dev/${HARDDRIVE}-part4
 
 #Copy`
 cd $WD
-cp ./wedge_installer.sh /mnt
+cp -r ./base_chroot /mnt
 
 
 
@@ -135,7 +135,7 @@ chroot /mnt /bin/bash ./wedge_installer.sh $CHROOTVAR
 #chroot /mnt /bin/bash --login
 
 # Remove wedge script
-rm -f /mnt/wedge_installer.sh
+rm -ff /mnt/base_chroot
 
 # Create snapshot of system
 zfs snapshot ${POOL_NAME}/ROOT/${SYSNAME}@init
