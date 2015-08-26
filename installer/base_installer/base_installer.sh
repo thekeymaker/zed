@@ -131,7 +131,7 @@ cp -r ./base_chroot /mnt
 
 # CHROOT!
 echo "Chroot!"
-chroot /mnt /bin/bash ./wedge_installer.sh $CHROOTVAR
+chroot /mnt /bin/bash /base_chroot/wedge_installer.sh $CHROOTVAR
 #chroot /mnt /bin/bash --login
 
 # Remove wedge script
