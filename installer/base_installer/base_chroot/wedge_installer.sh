@@ -44,9 +44,9 @@ cp /base_chroot/resources/cubes.jpg /usr/share/backgrounds/gnome/
 cp /base_chroot/resources/dots.png /usr/share/backgrounds/gnome/
 #TODO fix
 #dconf load /base_chroot/gnome.settings
-cd /usr/share/backgrounds/gnome/
-mv adwaita-day.jpg adwaita-day2.jpg
-ln -s ./cubes.jpg ./adwaita-day.jpg
+#cd /usr/share/backgrounds/gnome/
+#mv adwaita-day.jpg adwaita-day2.jpg
+#ln -s ./cubes.jpg ./adwaita-day.jpg
 
 
 # Set Location
