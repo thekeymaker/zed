@@ -86,10 +86,12 @@ zpool create -d -o feature@async_destroy=enabled -o feature@empty_bpobj=enabled 
 
 zfs create ${POOL_NAME}/ROOT
 zfs create ${POOL_NAME}/ROOT/$SYSNAME
+zfs create ${POOL_NAME}/HOME
 
 zfs umount -a
 
 zfs set mountpoint=/ ${POOL_NAME}/ROOT/$SYSNAME
+zfs set mountpoint=/home ${POOL_NAME}/HOME
 zpool set bootfs=${POOL_NAME}/ROOT/$SYSNAME $POOL_NAME
 	
 zpool export $POOL_NAME
