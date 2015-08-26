@@ -1,6 +1,9 @@
 #!/bin/bash
 # base_installer.sh
 
+# Enable debug mode
+set -x
+
 WD=`pwd`
 
 RELEASE="vivid"

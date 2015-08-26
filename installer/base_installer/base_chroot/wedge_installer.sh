@@ -1,4 +1,8 @@
 #!/bin/bash
+
+# Enable debug mode
+set -x
+
 SYSNAME=`echo $1 | cut -d'|' -f1`
 HOSTNAME=`echo $1 | cut -d'|' -f2`
 ROOTPASS=`echo $1 | cut -d'|' -f3`
