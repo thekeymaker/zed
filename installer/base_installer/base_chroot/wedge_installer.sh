@@ -9,8 +9,23 @@ ROOTPASS=`echo $1 | cut -d'|' -f3`
 USERNAME=`echo $1 | cut -d'|' -f4`
 USERPASS=`echo $1 | cut -d'|' -f5`
 
-# Setup apt-get
-locale-gen en_US.UTF-8
+# Set Location
+locale-gen
+localectl set-locale LANG="en_US.UTF-8"
+
+
+# Change hostname
+hostnamectl set-hostname $HOSTNAME
+
+# Change Root Password
+echo "root:$ROOTPASS" | chpasswd
+
+# Add User
+adduser $USERNAME --gecos "${USERNAME},,," --disabled-password
+echo "$USERNAME:$USERPASS" | chpasswd
+addgroup $USERNAME sudo  # Add user to sudo group
+
+# Update packages
 apt-get update
 apt-get install --yes ubuntu-minimal software-properties-common
 
@@ -42,7 +57,7 @@ apt-get update
 apt-get install --yes ubuntu-gnome-desktop
 
 # Create snapshot of system
-zfs snapshot ${POOL_NAME}/ROOT/${SYSNAME}@afgnome
+zfs snapshot rpool/ROOT/${SYSNAME}@afgnome
 
 cp /base_chroot/resources/cubes.jpg /usr/share/backgrounds/gnome/
 cp /base_chroot/resources/dots.png /usr/share/backgrounds/gnome/
@@ -52,29 +67,12 @@ cp /base_chroot/resources/dots.png /usr/share/backgrounds/gnome/
 #mv adwaita-day.jpg adwaita-day2.jpg
 #ln -s ./cubes.jpg ./adwaita-day.jpg
 
-
-# Set Location
-locale-gen
-localectl set-locale LANG="en_US.UTF-8"
-
-
-# Change hostname
-hostnamectl set-hostname $HOSTNAME
-
-# Change Root Password
-echo "root:$ROOTPASS" | chpasswd
-
-# Add User
-adduser $USERNAME --gecos "${USERNAME},,," --disabled-password
-echo "$USERNAME:$USERPASS" | chpasswd
-addgroup $USERNAME sudo  # Add user to sudo group
-
 # Setup Auto Login For User
-sed -i "/AutomaticLoginEnable/c\AutomaticLoginEnable = true" /etc/gdm/custom.conf
-sed -i "/AutomaticLogin/c\AutomaticLogin = $USERNAME" /etc/gdm/custom.conf
-sed -i "/TimedLoginEnable/c\TimedLoginEnable = true" /etc/gdm/custom.conf
-sed -i "/TimedLogin/c\TimedLogin = $USERNAME" /etc/gdm/custom.conf
-sed -i "/TimedLoginDelay/c\TimedLoginDelay = 10" /etc/gdm/custom.conf
+sed -i "/AutomaticLoginEnable=/c\AutomaticLoginEnable=true" /etc/gdm/custom.conf
+sed -i "/AutomaticLogin=/c\AutomaticLogin=$USERNAME" /etc/gdm/custom.conf
+sed -i "/TimedLoginEnable=/c\TimedLoginEnable=true" /etc/gdm/custom.conf
+sed -i "/TimedLogin=/c\TimedLogin=$USERNAME" /etc/gdm/custom.conf
+sed -i "/TimedLoginDelay=/c\TimedLoginDelay=10" /etc/gdm/custom.conf
 
 # Set Time Zone
 timedatectl set-timezone "America/Chicago"
