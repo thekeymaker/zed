@@ -9,10 +9,11 @@ ROOTPASS=`echo $1 | cut -d'|' -f3`
 USERNAME=`echo $1 | cut -d'|' -f4`
 USERPASS=`echo $1 | cut -d'|' -f5`
 
-# Set Location
-locale-gen
-localectl set-locale LANG="en_US.UTF-8"
+# Install dbus for next items
+apt-get install --yes dbus
 
+# Set Location
+localectl set-locale LANG="en_US.UTF-8"
 
 # Change hostname
 hostnamectl set-hostname $HOSTNAME
