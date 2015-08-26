@@ -36,6 +36,9 @@ touch /etc/init.d/modemmanager  #File needed so gnome install doesn't fail
 sed -i -e 's/main/main multiverse universe/g' /etc/apt/sources.list
 apt-get update
 apt-get install --yes ubuntu-gnome-desktop
+cp ./resources/cubs.jpg /usr/share/backgrounds/gnome/
+cp ./resources/dots.png /usr/share/backgrounds/gnome/
+dconf load ./gnome.settings
 
 
 # Set Location

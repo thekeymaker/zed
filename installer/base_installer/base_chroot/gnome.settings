@@ -2,14 +2,14 @@
 idle-delay=uint32 900
 
 [org/gnome/desktop/screensaver]
-picture-uri='file:///usr/share/backgrounds/gnome/Road.jpg'
+picture-uri='file:///usr/share/backgrounds/gnome/dots.png'
 primary-color='#ffffff'
 picture-options='zoom'
 lock-enabled=false
 secondary-color='#000000'
 
 [org/gnome/desktop/background]
-picture-uri='file:///usr/share/backgrounds/gnome/Road.jpg'
+picture-uri='file:///usr/share/backgrounds/gnome/cube.jpg'
 color-shading-type='solid'
 primary-color='#ffffff'
 picture-options='zoom'
