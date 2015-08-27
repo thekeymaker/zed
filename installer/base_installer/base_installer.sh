@@ -1,6 +1,9 @@
 #!/bin/bash
 # base_installer.sh
 
+# Enable debug mode
+set -x
+
 WD=`pwd`
 
 RELEASE="vivid"
@@ -38,12 +41,16 @@ EOF
 
 check_if_user_is_root
 
+# Welcome Screen
 echo -n "$WELCOME_TEXT" | zenity --title "WELCOME" --text-info --width=500 --height=400
 
+# Get user settings
+ENTRY=`zenity --forms --title="Install Info" --text="Please fill in all information below:" --add-entry="Hostname:" --add-password="Root Password:" --add-entry="Username:" --add-password="User Password:"`
+CHROOTVAR+="${ENTRY}|"
+
+# Set install hard drive
 cd /dev/disk/by-id
-
 HARDDRIVE_PATH=$(zenity --file-selection)
-
 echo $HARDDRIVE_PATH
 
 
@@ -82,10 +89,12 @@ zpool create -d -o feature@async_destroy=enabled -o feature@empty_bpobj=enabled 
 
 zfs create ${POOL_NAME}/ROOT
 zfs create ${POOL_NAME}/ROOT/$SYSNAME
+zfs create ${POOL_NAME}/HOME
 
 zfs umount -a
 
 zfs set mountpoint=/ ${POOL_NAME}/ROOT/$SYSNAME
+zfs set mountpoint=/home ${POOL_NAME}/HOME
 zpool set bootfs=${POOL_NAME}/ROOT/$SYSNAME $POOL_NAME
 	
 zpool export $POOL_NAME
@@ -116,30 +125,31 @@ ln -s ${HARDDRIVE_PATH} /dev/${HARDDRIVE}-part4
 
 #Copy`
 cd $WD
-cp ./wedge_installer.sh /mnt
+cp -r ./base_chroot /mnt
 
 
 
-# Get user settings
-ENTRY=`zenity --forms --title="Install Info" --text="Please fill in all information below:" --add-entry="Hostname:" --add-password="Root Password:" --add-entry="Username:" --add-password="User Password:"`
-
-CHROOTVAR+="${ENTRY}|"
+# Create snapshot of system befor chroot for testing 
+zfs snapshot ${POOL_NAME}/ROOT/${SYSNAME}@bfchroot
 
 
 
 # CHROOT!
 echo "Chroot!"
-chroot /mnt /bin/bash ./wedge_installer.sh $CHROOTVAR
+chroot /mnt /bin/bash /base_chroot/wedge_installer.sh $CHROOTVAR
 #chroot /mnt /bin/bash --login
 
 # Remove wedge script
-rm -f /mnt/wedge_installer.sh
+rm -rf /mnt/base_chroot
+
+# Set /home to lagacy to mount through fstab. Maybe find a better way in the future
+zfs set mountpoint=legacy ${POOL_NAME}/HOME
+echo "${POOL_NAME}/HOME /home zfs rw,noatime 0 0" >> /mnt/etc/fstab
+
 
 # Create snapshot of system
 zfs snapshot ${POOL_NAME}/ROOT/${SYSNAME}@init
 
 echo "Finished!"
-
-
 
 
