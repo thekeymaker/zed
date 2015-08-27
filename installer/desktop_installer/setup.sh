@@ -34,5 +34,7 @@ for line in `cat install`;do
 	check_exit_code $line
 done
 
+./git.sh
+
 # Install wget software
 ./wget.sh
