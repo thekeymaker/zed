@@ -142,6 +142,10 @@ chroot /mnt /bin/bash /base_chroot/wedge_installer.sh $CHROOTVAR
 # Remove wedge script
 rm -rf /mnt/base_chroot
 
+# Copy in this source file for later config
+mkdir -p /mnt/home/${USERNAME}/scripts
+cp -r ${PWD}/../desktop_installer /mnt/home/${USERNAME}/scripts
+
 # Set /home to lagacy to mount through fstab. Maybe find a better way in the future
 zfs set mountpoint=legacy ${POOL_NAME}/HOME
 echo "${POOL_NAME}/HOME /home zfs rw,noatime 0 0" >> /mnt/etc/fstab
