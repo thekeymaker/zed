@@ -142,6 +142,11 @@ chroot /mnt /bin/bash /base_chroot/wedge_installer.sh $CHROOTVAR
 # Remove wedge script
 rm -rf /mnt/base_chroot
 
+# Set /home to lagacy to mount through fstab. Maybe find a better way in the future
+zfs set mountpoint=legacy ${POOL_NAME}/HOME
+echo "${POOL_NAME}/HOME /home zfs rw,noatime 0 0" >> /mnt/etc/fstab
+
+
 # Create snapshot of system
 zfs snapshot ${POOL_NAME}/ROOT/${SYSNAME}@init
 
