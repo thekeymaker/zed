@@ -1,8 +1,11 @@
+#!/bin/bash
 
 ENTRY=`zenity --forms --title="Git Info" --text="Please fill in all information below:" --add-entry="Username:" --add-entry="Email:"`
 
 USERNAME=`echo $ENTRY | cut -d'|' -f1`
 EMAIL=`echo $ENTRY | cut -d'|' -f2`
+
+sudo apt-get install --yes git gitg
 
 git config --global user.name $USERNAME
 git config --global user.email $EMAIL
