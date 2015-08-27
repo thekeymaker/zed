@@ -70,11 +70,11 @@ cp /base_chroot/resources/dots.png /usr/share/backgrounds/gnome/
 #ln -s ./cubes.jpg ./adwaita-day.jpg
 
 # Setup Auto Login For User
-sed -i "/AutomaticLoginEnable=/c\AutomaticLoginEnable=true" /etc/gdm/custom.conf
-sed -i "/AutomaticLogin=/c\AutomaticLogin=$USERNAME" /etc/gdm/custom.conf
-sed -i "/TimedLoginEnable=/c\TimedLoginEnable=true" /etc/gdm/custom.conf
-sed -i "/TimedLogin=/c\TimedLogin=$USERNAME" /etc/gdm/custom.conf
-sed -i "/TimedLoginDelay=/c\TimedLoginDelay=10" /etc/gdm/custom.conf
+sed -i "/AutomaticLoginEnable =/c\AutomaticLoginEnable = true" /etc/gdm/custom.conf
+sed -i "/AutomaticLogin =/c\AutomaticLogin = $USERNAME" /etc/gdm/custom.conf
+sed -i "/TimedLoginEnable =/c\TimedLoginEnable = true" /etc/gdm/custom.conf
+sed -i "/TimedLogin =/c\TimedLogin = $USERNAME" /etc/gdm/custom.conf
+sed -i "/TimedLoginDelay =/c\TimedLoginDelay = 10" /etc/gdm/custom.conf
 
 # Set Time Zone
 timedatectl set-timezone "America/Chicago"
