@@ -62,14 +62,13 @@ apt-get install --yes ubuntu-gnome-desktop
 
 # Create snapshot of system
 zfs snapshot rpool/ROOT/${SYSNAME}@afgnome
+zfs snapshot rpool/HOME@afgnome
 
 # Setup Custom Wallpaper
 cp /base_chroot/resources/cubes.jpg /usr/share/backgrounds/gnome/
 cp /base_chroot/resources/dots.png /usr/share/backgrounds/gnome/
-su $USERNAME
-dbus-launch --exit-with-session gsettings set org.gnome.desktop.background picture-uri file:///usr/shared/backgrounds/gnome/cubes.jpg
-dbus-launch --exit-with-session gsettings set org.gnome.desktop.screensaver picture-uri file:///usr/shared/backgrounds/gnome/dots.png
-exit
+runuser -l $USERNAME -c 'dbus-launch --exit-with-session gsettings set org.gnome.desktop.background picture-uri file:///usr/shared/backgrounds/gnome/cubes.jpg'
+runuser -l $USERNAME -c 'dbus-launch --exit-with-session gsettings set org.gnome.desktop.screensaver picture-uri file:///usr/shared/backgrounds/gnome/dots.png'
 
 
 # Setup Auto Login For User
