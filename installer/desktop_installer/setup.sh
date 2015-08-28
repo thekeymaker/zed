@@ -10,7 +10,7 @@ function check_exit_code()
 
 
 ## Uninstall software
-#for line in `cat uninstall`;do
+#for line in `cat ./lists/uninstall`;do
 #	sudo apt-get purge -y $line
 #	check_exit_code($line)
 #done
@@ -21,7 +21,7 @@ sudo apt-get upgrade       # Strictly upgrades the current packages
 sudo apt-get dist-upgrade  # Installs updates (new ones)
 
 # Install ppa
-for line in `cat ppa`;do
+for line in `cat ./lists/ppa`;do
 	sudo add-apt-repository -y $line
 	check_exit_code $line
 done
@@ -29,10 +29,12 @@ done
 sudo apt-get update
 
 # Install software
-for line in `cat install`;do
+for line in `cat ./lists/install`;do
 	sudo apt-get install -y $line
 	check_exit_code $line
 done
+
+./git.sh
 
 # Install wget software
 ./wget.sh

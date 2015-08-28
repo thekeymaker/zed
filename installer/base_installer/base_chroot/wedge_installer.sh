@@ -42,6 +42,8 @@ apt-get install --yes grub2-common grub-pc
 apt-get install --yes zfs-initramfs
 apt-get install --yes vim
 apt-get install --yes htop
+apt-get install --yes git
+apt-get install --yes gitg
 apt-get --yes dist-upgrade
 
 grub-install /dev/sda
@@ -60,14 +62,14 @@ apt-get install --yes ubuntu-gnome-desktop
 
 # Create snapshot of system
 zfs snapshot rpool/ROOT/${SYSNAME}@afgnome
+zfs snapshot rpool/HOME@afgnome
 
+# Setup Custom Wallpaper
 cp /base_chroot/resources/cubes.jpg /usr/share/backgrounds/gnome/
 cp /base_chroot/resources/dots.png /usr/share/backgrounds/gnome/
-#TODO fix
-#dconf load /base_chroot/gnome.settings
-#cd /usr/share/backgrounds/gnome/
-#mv adwaita-day.jpg adwaita-day2.jpg
-#ln -s ./cubes.jpg ./adwaita-day.jpg
+runuser -l $USERNAME -c 'dbus-launch --exit-with-session gsettings set org.gnome.desktop.background picture-uri file:///usr/share/backgrounds/gnome/cubes.jpg'
+runuser -l $USERNAME -c 'dbus-launch --exit-with-session gsettings set org.gnome.desktop.screensaver picture-uri file:///usr/share/backgrounds/gnome/dots.png'
+
 
 # Setup Auto Login For User
 sed -i "/AutomaticLoginEnable =/c\AutomaticLoginEnable = true" /etc/gdm/custom.conf
