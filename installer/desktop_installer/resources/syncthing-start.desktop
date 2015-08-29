@@ -1,0 +1,10 @@
+[Desktop Entry]
+Type=Application
+Exec=/home/thekeymaker/scripts/syncthing-start
+Hidden=false
+NoDisplay=false
+X-GNOME-Autostart-enabled=true
+Name[en_US]=Syncthing
+Name=Syncthing
+Comment[en_US]=Starts Syncting at boot
+Comment=Starts Syncting at boot
