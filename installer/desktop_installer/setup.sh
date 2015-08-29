@@ -34,7 +34,18 @@ for line in `cat ./lists/install`;do
 	check_exit_code $line
 done
 
+# Install git 
 ./git.sh
+
+# Install extensions
+./extensions.sh
+
+# Install user settings
+dconf load / < ./list/extensions
+
+
+
+
 
 # Install wget software
 ./wget.sh
