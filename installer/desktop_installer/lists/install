@@ -1,5 +1,4 @@
-git
-gitg
+bash-completion
 synaptic
 gimp
 clementine
@@ -16,4 +15,5 @@ qbittorrent
 k3b
 mpv
 imagemagick
+syncthing
 virtualbox

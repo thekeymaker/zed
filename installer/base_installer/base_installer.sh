@@ -82,8 +82,7 @@ swapon ${HARDDRIVE_PATH}-part3
 echo
 echo
 
-#Label disks
-
+# Create Zpools
 zpool create -d -o feature@async_destroy=enabled -o feature@empty_bpobj=enabled -o feature@lz4_compress=enabled -o ashift=12 -O compression=lz4 $POOL_NAME ${HARDDRIVE_PATH}-part4
 # zpool export rpool
 

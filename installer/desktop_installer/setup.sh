@@ -1,5 +1,7 @@
 #!/bin/bash
 
+WD=`pwd`
+
 function check_exit_code()
 {
 	RESULT=$?
@@ -34,7 +36,26 @@ for line in `cat ./lists/install`;do
 	check_exit_code $line
 done
 
-./git.sh
+cd $WD
 
 # Install wget software
 ./wget.sh
+
+cd $WD
+
+# Install git 
+./git.sh
+
+cd $WD
+
+# Install extensions
+./extensions.sh
+
+cd $WD
+
+# Install user settings
+dconf load / < ./lists/settings
+
+cd $WD
+# Install vim 
+./vim.sh
