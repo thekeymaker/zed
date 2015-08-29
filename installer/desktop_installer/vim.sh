@@ -3,8 +3,8 @@
 mkdir ~/.fonts
 
 # Install cmake and python-dev - needed for ycm plugin
-sudo apt-get install cmake
-sudo apt-get install python-dev
+sudo apt-get install -y cmake
+sudo apt-get install -y python-dev
 
 git clone https://github.com/thekeymaker/my_vimrc_files.git ~/.vim
 
