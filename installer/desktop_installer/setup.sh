@@ -56,3 +56,6 @@ cd $WD
 # Install user settings
 dconf load / < ./lists/settings
 
+cd $WD
+# Install vim 
+./vim.sh
