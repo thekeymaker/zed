@@ -40,3 +40,5 @@ for line in `cat ./lists/extensions`;do
 	#check_exit_code $line
 done
 
+# Restart Gnome Shell
+gnome-shell --replace
