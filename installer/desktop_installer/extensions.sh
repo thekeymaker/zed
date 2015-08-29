@@ -41,4 +41,4 @@ for line in `cat ./lists/extensions`;do
 done
 
 # Restart Gnome Shell
-gnome-shell --replace
+#gnome-shell --replace
