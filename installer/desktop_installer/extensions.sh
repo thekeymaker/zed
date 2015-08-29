@@ -32,12 +32,11 @@ whereis gnome-shell-extension-installer
 
 rm -rf $DIRNAME
 
-set -x
+#set -x
 
 # Install extensions
 for line in `cat ./lists/extensions`;do
 	gnome-shell-extension-installer --yes $line
-	check_exit_code $line
-	exit
+	#check_exit_code $line
 done
 
