@@ -22,4 +22,5 @@ cd ~/.vim/fonts/Meslo
 cp *.otf ~/.fonts/
 
 # Set font settings for dconf
-gsettings set org/gnome/terminal/legacy/profiles:/:b1dcc9dd-5262-4d8d-a863-c897e6d979b9 font 'Meslo LG L DZ for Powerline 12'
+dconf write /org/gnome/terminal/legacy/profiles:/:b1dcc9dd-5262-4d8d-a863-c897e6d979b9/font "'Meslo LG L DZ for Powerline 12'"
+
