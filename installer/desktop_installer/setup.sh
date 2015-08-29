@@ -54,5 +54,5 @@ cd $WD
 cd $WD
 
 # Install user settings
-dconf load / < ./list/extensions
+dconf load / < ./lists/settings
 
