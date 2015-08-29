@@ -50,6 +50,8 @@ use-system-font=false
 use-theme-colors=false
 use-theme-transparency=false
 scrollback-unlimited=true
+use-transparent-background=true
+background-transparency-percent=8
 
 [org/gnome/deja-dup]
 backend='s3'
