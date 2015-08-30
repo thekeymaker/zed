@@ -57,5 +57,19 @@ cd $WD
 dconf load / < ./lists/settings
 
 cd $WD
+
 # Install vim 
 ./vim.sh
+
+cd $WD
+
+# Load in scripts
+mkdir ~/scripts
+cp ./resources/syncthing-start ~/scripts
+
+# Add syncthing to startup
+mkdir -p ~/.config/autostart
+cp ./resources/syncthing-start.desktop ~/.config/autostart
+
+echo 
+echo "Finished!"

@@ -1,5 +1,6 @@
 bash-completion
 synaptic
+firefox
 gimp
 clementine
 mplayer
@@ -16,4 +17,6 @@ k3b
 mpv
 imagemagick
 syncthing
+kdenlive
+vlc
 virtualbox
