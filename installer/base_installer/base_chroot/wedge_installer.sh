@@ -43,7 +43,6 @@ apt-get install --yes zfs-initramfs
 apt-get install --yes vim
 apt-get install --yes htop
 apt-get install --yes git
-apt-get install --yes gitg
 apt-get --yes dist-upgrade
 
 grub-install /dev/sda

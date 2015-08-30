@@ -51,8 +51,6 @@ CHROOTVAR+="${ENTRY}|"
 # Set install hard drive
 cd /dev/disk/by-id
 HARDDRIVE_PATH=$(zenity --file-selection)
-echo $HARDDRIVE_PATH
-
 
 
 # Install Needed ZFS tools
@@ -64,10 +62,9 @@ check_exit_code
 
 
 # Format HD
-#Prompt would be nice
-# Add swap/boot/ and root
 echo "Formating HD"
 parted -a optimal ${HARDDRIVE_PATH} < ${WD}/partitions.txt
+
 
 sync
 echo
@@ -79,8 +76,6 @@ mkfs.ext3 ${HARDDRIVE_PATH}-part2
 sleep 2
 swapon ${HARDDRIVE_PATH}-part3
 
-echo
-echo
 
 # Create Zpools
 zpool create -d -o feature@async_destroy=enabled -o feature@empty_bpobj=enabled -o feature@lz4_compress=enabled -o ashift=12 -O compression=lz4 $POOL_NAME ${HARDDRIVE_PATH}-part4
@@ -126,13 +121,6 @@ ln -s ${HARDDRIVE_PATH} /dev/${HARDDRIVE}-part4
 cd $WD
 cp -r ./base_chroot /mnt
 
-
-
-# Create snapshot of system befor chroot for testing 
-zfs snapshot ${POOL_NAME}/ROOT/${SYSNAME}@bfchroot
-
-
-
 # CHROOT!
 echo "Chroot!"
 chroot /mnt /bin/bash /base_chroot/wedge_installer.sh $CHROOTVAR
@@ -142,8 +130,8 @@ chroot /mnt /bin/bash /base_chroot/wedge_installer.sh $CHROOTVAR
 rm -rf /mnt/base_chroot
 
 # Copy in this source file for later config
-mkdir -p /mnt/home/${USERNAME}/scripts
-cp -r ${PWD}/../desktop_installer /mnt/home/${USERNAME}/scripts
+#mkdir -p /mnt/home/${USERNAME}/scripts
+#cp -r ${PWD}/../desktop_installer /mnt/home/${USERNAME}/scripts
 
 # Set /home to lagacy to mount through fstab. Maybe find a better way in the future
 zfs set mountpoint=legacy ${POOL_NAME}/HOME
