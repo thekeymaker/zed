@@ -2,7 +2,7 @@ adwaita-icon-theme-full
 alsa-base
 alsa-utils
 anacron
-systemd-cron
+ systemd-cron
 at-spi2-core
 baobab
 bc
@@ -30,7 +30,7 @@ gnome-control-center
 gnome-disk-utility
 gnome-documents
 gnome-font-viewer
-gnome-keyring
+#gnome-keyring
 gnome-menus
 gnome-online-accounts
 gnome-screenshot
@@ -117,8 +117,8 @@ cups-filters
 deja-dup
 deja-dup-backend-cloudfiles
 deja-dup-backend-s3
-empathy
-evolution
+#empathy
+#evolution
 firefox
 fonts-droid
 fonts-guru
@@ -187,13 +187,13 @@ printer-driver-splix
 pulseaudio-module-bluetooth
 pulseaudio-module-x11
 python3-aptdaemon.pkcompat
-rhythmbox
-rhythmbox-plugin-magnatune
+#rhythmbox
+#rhythmbox-plugin-magnatune
 shotwell
 software-center
 speech-dispatcher
 telepathy-idle
-totem
+#totem
 transmission-gtk
 ttf-ancient-fonts-symbola
 ttf-indic-fonts-core
