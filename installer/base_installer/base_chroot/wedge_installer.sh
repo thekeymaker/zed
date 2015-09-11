@@ -43,6 +43,8 @@ apt-get install --yes ubuntu-minimal software-properties-common
 export DEBIAN_FRONTEND=noninteractive
 
 apt-add-repository --yes ppa:zfs-native/stable
+apt-add-repository --yes ppa:gnome3-team/gnome3-staging
+apt-add-repository --yes ppa:gnome3-team/gnome3
 apt-get update
 apt-get install --yes --no-install-recommends linux-image-generic linux-headers-generic
 apt-get install --yes ubuntu-zfs
