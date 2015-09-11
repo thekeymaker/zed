@@ -4,6 +4,14 @@ locale-gen en_US.UTF-8
 # Enable debug mode
 set -x
 
+function check_exit_code()
+{
+	RESULT=$?
+	if [ "$RESULT" -ne 0 ]; then
+		echo Failed for $1 >> log.txt
+	fi
+}
+
 SYSNAME=`echo $1 | cut -d'|' -f1`
 HOSTNAME=`echo $1 | cut -d'|' -f2`
 ROOTPASS=`echo $1 | cut -d'|' -f3`
@@ -57,7 +65,12 @@ update-grub
 touch /etc/init.d/modemmanager  #File needed so gnome install doesn't fail
 sed -i -e 's/main/main multiverse universe/g' /etc/apt/sources.list
 apt-get update
-apt-get install --yes ubuntu-gnome-desktop
+
+grep -v '^#' ./install_ubuntu_gnome | while read -r line ; do  
+	sudo apt-get install -y -pp $line
+	check_exit_code $line
+done
+
 
 # Create snapshot of system
 zfs snapshot rpool/ROOT/${SYSNAME}@afgnome
