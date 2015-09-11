@@ -84,7 +84,8 @@ picture-uri='file:///usr/share/backgrounds/gnome/cubes.jpg'
 
 [org/gnome/desktop/input-sources]
 sources=[('xkb', 'us')]
-xkb-options=@as []
+xkb-options=['terminate:ctrl_alt_bksp']
+
 
 [org/gtk/settings/file-chooser]
 clock-format='12h'
