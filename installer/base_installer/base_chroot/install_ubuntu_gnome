@@ -192,7 +192,7 @@ python3-aptdaemon.pkcompat
 shotwell
 software-center
 speech-dispatcher
-telepathy-idle
+#telepathy-idle
 #totem
 transmission-gtk
 ttf-ancient-fonts-symbola
