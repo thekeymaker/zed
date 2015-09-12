@@ -69,7 +69,7 @@ sed -i -e 's/main/main multiverse universe/g' /etc/apt/sources.list
 apt-get update
 
 grep -v '^#' ./install_ubuntu_gnome | while read -r line ; do  
-	sudo apt-get install -y -pp $line
+	sudo apt-get install -y -qq $line
 	check_exit_code $line
 done
 
