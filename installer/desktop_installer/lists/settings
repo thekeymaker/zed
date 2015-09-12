@@ -64,10 +64,15 @@ gtk-im-module='gtk-im-context-simple'
 
 [org/gnome/desktop/screensaver]
 picture-uri='file:///usr/share/backgrounds/gnome/dots.png'
+ubuntu-lock-on-suspend=false
 lock-enabled=false
 
 [org/gnome/desktop/session]
 idle-delay=uint32 900
+
+[org/gnome/desktop/wm/preferences]
+button-layout=':minimize,maximize,close'
+theme='Numix'
 
 [org/gnome/desktop/search-providers]
 sort-order=['gnome-contacts.desktop', 'gnome-documents.desktop', 'nautilus.desktop']
@@ -84,7 +89,8 @@ picture-uri='file:///usr/share/backgrounds/gnome/cubes.jpg'
 
 [org/gnome/desktop/input-sources]
 sources=[('xkb', 'us')]
-xkb-options=@as []
+xkb-options=['terminate:ctrl_alt_bksp']
+
 
 [org/gtk/settings/file-chooser]
 clock-format='12h'

@@ -1,6 +1,7 @@
 bash-completion
 synaptic
 firefox
+chromium-browser
 gimp
 clementine
 mplayer
@@ -18,5 +19,7 @@ mpv
 imagemagick
 syncthing
 kdenlive
+audacity
+gparted
 vlc
 virtualbox

@@ -4,6 +4,14 @@ locale-gen en_US.UTF-8
 # Enable debug mode
 set -x
 
+function check_exit_code()
+{
+	RESULT=$?
+	if [ "$RESULT" -ne 0 ]; then
+		echo Failed for $1 >> log.txt
+	fi
+}
+
 SYSNAME=`echo $1 | cut -d'|' -f1`
 HOSTNAME=`echo $1 | cut -d'|' -f2`
 ROOTPASS=`echo $1 | cut -d'|' -f3`
@@ -35,6 +43,8 @@ apt-get install --yes ubuntu-minimal software-properties-common
 export DEBIAN_FRONTEND=noninteractive
 
 apt-add-repository --yes ppa:zfs-native/stable
+apt-add-repository --yes ppa:gnome3-team/gnome3-staging
+apt-add-repository --yes ppa:gnome3-team/gnome3
 apt-get update
 apt-get install --yes --no-install-recommends linux-image-generic linux-headers-generic
 apt-get install --yes ubuntu-zfs
@@ -57,7 +67,12 @@ update-grub
 touch /etc/init.d/modemmanager  #File needed so gnome install doesn't fail
 sed -i -e 's/main/main multiverse universe/g' /etc/apt/sources.list
 apt-get update
-apt-get install --yes ubuntu-gnome-desktop
+
+grep -v '^#' /base_chroot/install_ubuntu_gnome | while read -r line ; do  
+	sudo apt-get install -y -qq $line
+	check_exit_code $line
+done
+
 
 # Create snapshot of system
 zfs snapshot rpool/ROOT/${SYSNAME}@afgnome
