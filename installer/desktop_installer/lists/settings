@@ -64,6 +64,7 @@ gtk-im-module='gtk-im-context-simple'
 
 [org/gnome/desktop/screensaver]
 picture-uri='file:///usr/share/backgrounds/gnome/dots.png'
+ubuntu-lock-on-suspend=false
 lock-enabled=false
 
 [org/gnome/desktop/session]
