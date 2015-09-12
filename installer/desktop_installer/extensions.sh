@@ -35,7 +35,7 @@ rm -rf $DIRNAME
 #set -x
 
 # Install extensions
-for line in `cat ./lists/extensions`;do
+cut -c-3 ./lists/extensions | while read -r line ; do  
 	gnome-shell-extension-installer --yes $line
 	#check_exit_code $line
 done
