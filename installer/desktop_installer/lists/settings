@@ -70,6 +70,10 @@ lock-enabled=false
 [org/gnome/desktop/session]
 idle-delay=uint32 900
 
+[org/gnome/desktop/wm/preferences]
+button-layout=':minimize,maximize,close'
+theme='Numix'
+
 [org/gnome/desktop/search-providers]
 sort-order=['gnome-contacts.desktop', 'gnome-documents.desktop', 'nautilus.desktop']
 disabled=['seahorse.desktop']
