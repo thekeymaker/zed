@@ -57,7 +57,7 @@ CHROOTVAR+="${ENTRY}|"
 # Set install hard drive path
 cd /dev/disk/by-id
 HARDDRIVE_PATH=$(zenity --file-selection)
-HARDDRIVE_PATH+="${SYSNAME}|"
+CHROOTVAR+="${HARDDRIVE_PATH}|"
 
 
 # Install Needed ZFS tools
@@ -88,7 +88,6 @@ sleep 2
 
 # Create Zpools
 zpool create -d -o feature@async_destroy=enabled -o feature@empty_bpobj=enabled -o feature@lz4_compress=enabled -o ashift=12 -O compression=lz4 $POOL_NAME ${HARDDRIVE_PATH}-part5
-# zpool export rpool
 
 zfs create ${POOL_NAME}/ROOT
 zfs create ${POOL_NAME}/ROOT/$SYSNAME
