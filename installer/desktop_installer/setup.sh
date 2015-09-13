@@ -71,5 +71,10 @@ cp ./resources/syncthing-start ~/scripts
 mkdir -p ~/.config/autostart
 cp ./resources/syncthing-start.desktop ~/.config/autostart
 
+cd $WD
+
+# Install nfs
+./nfs.sh
+
 echo 
 echo "Finished!"
