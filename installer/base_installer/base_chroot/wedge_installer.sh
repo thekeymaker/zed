@@ -17,6 +17,12 @@ HOSTNAME=`echo $1 | cut -d'|' -f2`
 ROOTPASS=`echo $1 | cut -d'|' -f3`
 USERNAME=`echo $1 | cut -d'|' -f4`
 USERPASS=`echo $1 | cut -d'|' -f5`
+HARDDRIVE_PATH=`echo $1 | cut -d'|' -f6`
+
+#Setup neede items for grub
+HARDDRIVE=`basename ${HARDDRIVE_PATH}`
+ln -s ${HARDDRIVE_PATH} /dev/${HARDDRIVE}-part5
+
 
 # Install dbus for next items
 apt-get install --yes dbus

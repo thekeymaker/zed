@@ -54,16 +54,16 @@ echo -n "$WELCOME_TEXT" | zenity --title "WELCOME" --text-info --width=500 --hei
 ENTRY=`zenity --forms --title="Install Info" --text="Please fill in all information below:" --add-entry="Hostname:" --add-password="Root Password:" --add-entry="Username:" --add-password="User Password:"`
 CHROOTVAR+="${ENTRY}|"
 
-# Set install hard drive
+# Set install hard drive path
 cd /dev/disk/by-id
 HARDDRIVE_PATH=$(zenity --file-selection)
+HARDDRIVE_PATH+="${SYSNAME}|"
 
 
 # Install Needed ZFS tools
 apt-add-repository --yes ppa:zfs-native/stable
 apt-get update
 apt-get install --yes debootstrap ubuntu-zfs
-
 check_exit_code
 
 
@@ -76,15 +76,18 @@ sync
 echo
 echo "Format Partitions"
 sleep 2
-mkswap -L swap ${HARDDRIVE_PATH}-part3
+mkswap -L swap ${HARDDRIVE_PATH}-part4
 sleep 2
-mkfs.ext3 ${HARDDRIVE_PATH}-part2
+mkfs.ext3 ${HARDDRIVE_PATH}-part3
 sleep 2
-swapon ${HARDDRIVE_PATH}-part3
+swapon ${HARDDRIVE_PATH}-part4
+sleep 2
+mkfs.vfat ${HARDDRIVE_PATH}-part2
+sleep 2
 
 
 # Create Zpools
-zpool create -d -o feature@async_destroy=enabled -o feature@empty_bpobj=enabled -o feature@lz4_compress=enabled -o ashift=12 -O compression=lz4 $POOL_NAME ${HARDDRIVE_PATH}-part4
+zpool create -d -o feature@async_destroy=enabled -o feature@empty_bpobj=enabled -o feature@lz4_compress=enabled -o ashift=12 -O compression=lz4 $POOL_NAME ${HARDDRIVE_PATH}-part5
 # zpool export rpool
 
 zfs create ${POOL_NAME}/ROOT
@@ -102,26 +105,26 @@ zpool export $POOL_NAME
 zpool import -d /dev/disk/by-id -R /mnt $POOL_NAME
 
 mkdir -p /mnt/boot
-mount ${HARDDRIVE_PATH}-part2 /mnt/boot/
+mount ${HARDDRIVE_PATH}-part3 /mnt/boot/
 
 debootstrap $RELEASE /mnt
 
 cp /etc/hostname /mnt/etc/
 cp /etc/hosts /mnt/etc/
 
-echo "${HARDDRIVE_PATH}-part2  /boot  auto  defaults  0  1" >> /mnt/etc/fstab
-echo "${HARDDRIVE_PATH}-part3  none   swap  sw        0  0" >> /mnt/etc/fstab
+echo "${HARDDRIVE_PATH}-part3  /boot  auto  defaults  0  1" >> /mnt/etc/fstab
+echo "${HARDDRIVE_PATH}-part4  none   swap  sw        0  0" >> /mnt/etc/fstab
 
 mount --bind /dev  /mnt/dev
 mount --bind /proc /mnt/proc
 mount --bind /sys  /mnt/sys
 
+#Copy in zfs cache
+mkdir -p /mnt/etc/zfs
+cp /etc/zfs/zpool.cache /mnt/etc/zfs/*
+
 #cat /etc/modprobe.d/zfs-arc-max.conf 
 #options zfs zfs_arc_max=1073741824
-
-#Setup neede items for grub
-HARDDRIVE=`basename ${HARDDRIVE_PATH}`
-ln -s ${HARDDRIVE_PATH} /dev/${HARDDRIVE}-part4
 
 #Copy`
 cd $WD
@@ -140,8 +143,9 @@ rm -rf /mnt/base_chroot
 #cp -r ${PWD}/../desktop_installer /mnt/home/${USERNAME}/scripts
 
 # Set /home to lagacy to mount through fstab. Maybe find a better way in the future
-zfs set mountpoint=legacy ${POOL_NAME}/HOME
-echo "${POOL_NAME}/HOME /home zfs rw,noatime 0 0" >> /mnt/etc/fstab
+# Should work
+#zfs set mountpoint=legacy ${POOL_NAME}/HOME
+#echo "${POOL_NAME}/HOME /home zfs rw,noatime 0 0" >> /mnt/etc/fstab
 
 
 # Create snapshot of system 
