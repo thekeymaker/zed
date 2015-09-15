@@ -19,4 +19,5 @@ git config --global alias.ci commit
 git config --global alias.rb rebase
 git config --global alias.st status
 
-git config --global alias.lg  "log --graph --decorate" 
+git config --global alias.lg  "log --graph --decorate --pretty --relative-date --tags" 
+git config --global alias.tree  "log --graph --decorate --pretty --relative-date --tags --all --branches" 
