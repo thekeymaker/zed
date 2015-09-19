@@ -73,11 +73,6 @@ grep -v '^#' /base_chroot/install_ubuntu_gnome | while read -r line ; do
 	check_exit_code $line
 done
 
-
-# Create snapshot of system
-zfs snapshot rpool/ROOT/${SYSNAME}@afgnome
-zfs snapshot rpool/HOME@afgnome
-
 # Setup Custom Wallpaper
 cp /base_chroot/resources/cubes.jpg /usr/share/backgrounds/gnome/
 cp /base_chroot/resources/dots.png /usr/share/backgrounds/gnome/

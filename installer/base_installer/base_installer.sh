@@ -138,8 +138,9 @@ zfs set mountpoint=legacy ${POOL_NAME}/HOME
 echo "${POOL_NAME}/HOME /home zfs rw,noatime 0 0" >> /mnt/etc/fstab
 
 
-# Create snapshot of system
-zfs snapshot ${POOL_NAME}/ROOT/${SYSNAME}@init
+# Create snapshot of system 
+zfs snapshot ${POOL_NAME}/ROOT/${SYSNAME}@bInit
+zfs snapshot ${POOL_NAME}/HOME@bInit
 
 echo "Finished!"
 
