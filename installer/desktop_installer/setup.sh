@@ -63,6 +63,10 @@ cd $WD
 
 cd $WD
 
+# Install tmux
+./tmux.sh
+
+cd $WD
 # Load in scripts
 mkdir ~/scripts
 cp ./resources/syncthing-start ~/scripts
@@ -70,6 +74,11 @@ cp ./resources/syncthing-start ~/scripts
 # Add syncthing to startup
 mkdir -p ~/.config/autostart
 cp ./resources/syncthing-start.desktop ~/.config/autostart
+
+cd $WD
+
+# Install nfs
+./nfs.sh
 
 echo 
 echo "Finished!"

@@ -60,7 +60,7 @@ grub-install /dev/sda
 #Fix grub boot parameters
 sed -i '/GRUB_CMDLINE_LINUX_DEFAULT/c\GRUB_CMDLINE_LINUX_DEFAULT="boot=zfs rpool=rpool bootfs=rpool/ROOT/zed-1"' /etc/default/grub
 
-
+# Update grub config
 update-grub
 
 # Install Gnome3
@@ -72,11 +72,6 @@ grep -v '^#' /base_chroot/install_ubuntu_gnome | while read -r line ; do
 	sudo apt-get install -y -qq $line
 	check_exit_code $line
 done
-
-
-# Create snapshot of system
-zfs snapshot rpool/ROOT/${SYSNAME}@afgnome
-zfs snapshot rpool/HOME@afgnome
 
 # Setup Custom Wallpaper
 cp /base_chroot/resources/cubes.jpg /usr/share/backgrounds/gnome/

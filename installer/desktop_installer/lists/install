@@ -1,8 +1,8 @@
 bash-completion
 synaptic
 firefox
-chromium-browser
 gimp
+meld
 clementine
 mplayer
 gnome-mplayer
@@ -18,6 +18,8 @@ k3b
 mpv
 imagemagick
 syncthing
+zim
+python-gtksourceview2
 kdenlive
 audacity
 gparted

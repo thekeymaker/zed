@@ -34,8 +34,14 @@ POOL_NAME=rpool
 WELCOME_TEXT=`cat <<EOF
 Welcome to Zed Base Installer!
 
-In the following file browser please select the hard
-drive to install the system too.
+The following prompt will ask you to give some imformation
+about the machine name and users of this computer.  The user
+that is created will also me given sudo permissions. 
+
+After that you will be asked which harddrive the installer 
+should install too.  
+
+Thanks againg for trying this install!
 EOF
 `
 
@@ -138,8 +144,9 @@ zfs set mountpoint=legacy ${POOL_NAME}/HOME
 echo "${POOL_NAME}/HOME /home zfs rw,noatime 0 0" >> /mnt/etc/fstab
 
 
-# Create snapshot of system
-zfs snapshot ${POOL_NAME}/ROOT/${SYSNAME}@init
+# Create snapshot of system 
+zfs snapshot ${POOL_NAME}/ROOT/${SYSNAME}@bInit
+zfs snapshot ${POOL_NAME}/HOME@bInit
 
 echo "Finished!"
 
