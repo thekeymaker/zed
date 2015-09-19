@@ -63,6 +63,10 @@ cd $WD
 
 cd $WD
 
+# Install tmux
+./tmux.sh
+
+cd $WD
 # Load in scripts
 mkdir ~/scripts
 cp ./resources/syncthing-start ~/scripts
