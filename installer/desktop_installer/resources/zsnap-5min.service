@@ -1,0 +1,6 @@
+[Unit]
+Description=Takes a snapshot of home dataset
+
+[Service]
+Type=simple
+ExecStart=/sbin/autosnap rpool/HOME 5min 20
