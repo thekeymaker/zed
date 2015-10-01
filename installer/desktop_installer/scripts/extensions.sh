@@ -18,7 +18,7 @@ cd $DIRNAME
 
 # Install extensions
 cut -c-3 ../lists/extensions | while read -r line ; do  
-	sudo ./gnome-shell-extension-installer --yes $line
+	./gnome-shell-extension-installer --yes $line
 	#check_exit_code $line
 done
 
