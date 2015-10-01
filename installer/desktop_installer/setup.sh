@@ -48,5 +48,9 @@ done
 
 cd $BASEWD
 
+
+# Install user settings
+dconf load / < ./lists/settings
+
 echo 
 echo "Finished!"
