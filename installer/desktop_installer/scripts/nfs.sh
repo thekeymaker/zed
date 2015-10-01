@@ -9,6 +9,11 @@ ENTRY=`zenity --list \
   Client "This computer will connect to my NFS server" \
   Server "This computer will host my NFS server" `
 
+if [ -z $ENTRY]; then
+   echo "NFS setup skipped"
+   exit
+fi
+
 if [ $ENTRY == "Client" ]; then
 	echo "Setup Client"
 	sudo apt-get install nfs-common

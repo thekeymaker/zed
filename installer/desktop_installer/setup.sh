@@ -1,7 +1,6 @@
 #!/bin/bash
 
-WD=`pwd`
-SCRIPTDIR=".scripts"
+BASEWD=`pwd`
 
 function check_exit_code()
 {
@@ -38,14 +37,16 @@ for line in `cat ./lists/install`;do
 done
 
 # Run all installer scrips
-ALLSCRIPTS=`find ./scripts -maxdepth 1 -name "*.sh"` 
+cd ./scripts
+SCRIPTWD=`pwd`
+ALLSCRIPTS=`find . -maxdepth 1 -name "*.sh"` 
 echo $ALLSCRIPTS
 for SCRIPT in $ALLSCRIPTS; do
-	cd $WD
-	/bin/bash $SCRIPT
+	cd $SCRIPTWD
+	/bin/bash -x $SCRIPT
 done
 
-cd $WD
+cd $BASEWD
 
 echo 
 echo "Finished!"
