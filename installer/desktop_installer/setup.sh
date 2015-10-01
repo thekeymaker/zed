@@ -38,9 +38,11 @@ for line in `cat ./lists/install`;do
 done
 
 # Run all installer scrips
-find ./scripts -name "*.sh" | while read script; do
+ALLSCRIPTS=`find ./scripts -maxdepth 1 -name "*.sh"` 
+echo $ALLSCRIPTS
+for SCRIPT in $ALLSCRIPTS; do
 	cd $WD
-	$script; 
+	/bin/bash $SCRIPT
 done
 
 cd $WD
