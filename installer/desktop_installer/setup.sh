@@ -1,6 +1,6 @@
 #!/bin/bash
 
-WD=`pwd`
+BASEWD=`pwd`
 
 function check_exit_code()
 {
@@ -36,49 +36,21 @@ for line in `cat ./lists/install`;do
 	check_exit_code $line
 done
 
-cd $WD
+# Run all installer scrips
+cd ./scripts
+SCRIPTWD=`pwd`
+ALLSCRIPTS=`find . -maxdepth 1 -name "*.sh"` 
+echo $ALLSCRIPTS
+for SCRIPT in $ALLSCRIPTS; do
+	cd $SCRIPTWD
+	/bin/bash -x $SCRIPT
+done
 
-# Install wget software
-./wget.sh
+cd $BASEWD
 
-cd $WD
-
-# Install git 
-./git.sh
-
-cd $WD
-
-# Install extensions
-./extensions.sh
-
-cd $WD
 
 # Install user settings
 dconf load / < ./lists/settings
-
-cd $WD
-
-# Install vim 
-./vim.sh
-
-cd $WD
-
-# Install tmux
-./tmux.sh
-
-cd $WD
-# Load in scripts
-mkdir ~/scripts
-cp ./resources/syncthing-start ~/scripts
-
-# Add syncthing to startup
-mkdir -p ~/.config/autostart
-cp ./resources/syncthing-start.desktop ~/.config/autostart
-
-cd $WD
-
-# Install nfs
-./nfs.sh
 
 echo 
 echo "Finished!"

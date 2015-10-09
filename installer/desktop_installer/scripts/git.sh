@@ -2,6 +2,11 @@
 
 ENTRY=`zenity --forms --title="Git Info" --text="Please fill in all information below:" --add-entry="Username:" --add-entry="Email:"`
 
+if [ -z $ENTRY]; then
+   echo "Git config skipped"
+   exit
+fi
+
 USERNAME=`echo $ENTRY | cut -d'|' -f1`
 EMAIL=`echo $ENTRY | cut -d'|' -f2`
 

@@ -5,8 +5,8 @@
 set -x
 
 WD=`pwd`
-
 RELEASE="vivid"
+POOL_NAME=rpool
 SYSNAME="zed-1"
 CHROOTVAR+="${SYSNAME}|"
 echo $CHROOTVAR
@@ -29,7 +29,6 @@ function check_if_user_is_root()
 	fi
 }
 
-POOL_NAME=rpool
 
 WELCOME_TEXT=`cat <<EOF
 Welcome to Zed Base Installer!
@@ -63,54 +62,50 @@ HARDDRIVE_PATH=$(zenity --file-selection)
 apt-add-repository --yes ppa:zfs-native/stable
 apt-get update
 apt-get install --yes debootstrap ubuntu-zfs
-
 check_exit_code
 
 
-# Format HD
+# Partistion HD with boot/swap/zfs 
 echo "Formating HD"
 parted -a optimal ${HARDDRIVE_PATH} < ${WD}/partitions.txt
-
-
 sync
+
+# Enable Swap
 echo
-echo "Format Partitions"
+echo "Enable Swap"
 sleep 2
-mkswap -L swap ${HARDDRIVE_PATH}-part3
+mkswap -L swap ${HARDDRIVE_PATH}-part2
 sleep 2
-mkfs.ext3 ${HARDDRIVE_PATH}-part2
-sleep 2
-swapon ${HARDDRIVE_PATH}-part3
+swapon ${HARDDRIVE_PATH}-part2
 
 
 # Create Zpools
-zpool create -d -o feature@async_destroy=enabled -o feature@empty_bpobj=enabled -o feature@lz4_compress=enabled -o ashift=12 -O compression=lz4 $POOL_NAME ${HARDDRIVE_PATH}-part4
-# zpool export rpool
+zpool create -d -o feature@async_destroy=enabled -o feature@empty_bpobj=enabled -o feature@lz4_compress=enabled -o ashift=12 -O compression=lz4 $POOL_NAME ${HARDDRIVE_PATH}-part3
 
 zfs create ${POOL_NAME}/ROOT
-zfs create ${POOL_NAME}/ROOT/$SYSNAME
+#zfs create ${POOL_NAME}/ROOT/$SYSNAME
+zfs create ${POOL_NAME}/BOOT
 zfs create ${POOL_NAME}/HOME
 
 zfs umount -a
 
-zfs set mountpoint=/ ${POOL_NAME}/ROOT/$SYSNAME
+#zfs set mountpoint=/ ${POOL_NAME}/ROOT/$SYSNAME
+zfs set mountpoint=/     ${POOL_NAME}/ROOT
+zfs set mountpoint=/boot ${POOL_NAME}/BOOT
 zfs set mountpoint=/home ${POOL_NAME}/HOME
-zpool set bootfs=${POOL_NAME}/ROOT/$SYSNAME $POOL_NAME
+#zpool set bootfs=${POOL_NAME}/ROOT/$SYSNAME $POOL_NAME
 	
 zpool export $POOL_NAME
 
 zpool import -d /dev/disk/by-id -R /mnt $POOL_NAME
 
-mkdir -p /mnt/boot
-mount ${HARDDRIVE_PATH}-part2 /mnt/boot/
-
+# Load minimal ubunt file structure
 debootstrap $RELEASE /mnt
 
 cp /etc/hostname /mnt/etc/
 cp /etc/hosts /mnt/etc/
 
-echo "${HARDDRIVE_PATH}-part2  /boot  auto  defaults  0  1" >> /mnt/etc/fstab
-echo "${HARDDRIVE_PATH}-part3  none   swap  sw        0  0" >> /mnt/etc/fstab
+echo "${HARDDRIVE_PATH}-part2  none   swap  sw        0  0" >> /mnt/etc/fstab
 
 mount --bind /dev  /mnt/dev
 mount --bind /proc /mnt/proc
@@ -121,7 +116,7 @@ mount --bind /sys  /mnt/sys
 
 #Setup neede items for grub
 HARDDRIVE=`basename ${HARDDRIVE_PATH}`
-ln -s ${HARDDRIVE_PATH} /dev/${HARDDRIVE}-part4
+ln -s ${HARDDRIVE_PATH}-part3 /dev/${HARDDRIVE}-part3
 
 #Copy`
 cd $WD
@@ -139,13 +134,10 @@ rm -rf /mnt/base_chroot
 #mkdir -p /mnt/home/${USERNAME}/scripts
 #cp -r ${PWD}/../desktop_installer /mnt/home/${USERNAME}/scripts
 
-# Set /home to lagacy to mount through fstab. Maybe find a better way in the future
-zfs set mountpoint=legacy ${POOL_NAME}/HOME
-echo "${POOL_NAME}/HOME /home zfs rw,noatime 0 0" >> /mnt/etc/fstab
-
 
 # Create snapshot of system 
-zfs snapshot ${POOL_NAME}/ROOT/${SYSNAME}@bInit
+zfs snapshot ${POOL_NAME}/ROOT@bInit
+zfs snapshot ${POOL_NAME}/BOOT@bInit
 zfs snapshot ${POOL_NAME}/HOME@bInit
 
 echo "Finished!"
