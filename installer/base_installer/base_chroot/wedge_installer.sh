@@ -58,7 +58,7 @@ apt-get --yes dist-upgrade
 grub-install /dev/sda
 
 #Fix grub boot parameters
-sed -i '/GRUB_CMDLINE_LINUX_DEFAULT/c\GRUB_CMDLINE_LINUX_DEFAULT="boot=zfs rpool=rpool bootfs=rpool/ROOT/zed-1"' /etc/default/grub
+sed -i '/GRUB_CMDLINE_LINUX_DEFAULT/c\GRUB_CMDLINE_LINUX_DEFAULT="boot=zfs rpool=rpool bootfs=rpool/ROOT"' /etc/default/grub
 
 # Update grub config
 update-grub
@@ -88,7 +88,7 @@ sed -i "/TimedLogin =/c\TimedLogin = $USERNAME" /etc/gdm/custom.conf
 sed -i "/TimedLoginDelay =/c\TimedLoginDelay = 10" /etc/gdm/custom.conf
 
 # Set Time Zone
-timedatectl set-timezone "America/Chicago"
+#timedatectl set-timezone "America/Chicago"
 
 echo
 echo "Exiting Chroot"
