@@ -1,4 +1,6 @@
-backup quorra:/mnt/backup  
-watch quorra:/mnt/watch  
-listen quorra:/mnt/listen  
-glance quorra:/mnt/glance  
+backup 		quorra:/mnt/backup  
+watch 		quorra:/mnt/watch  
+listen 		quorra:/mnt/listen  
+glance 		quorra:/mnt/glance  
+software 	quorra:/mnt/software 
+repository 	quorra:/mnt/repository 
