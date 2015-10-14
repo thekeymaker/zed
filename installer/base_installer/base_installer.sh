@@ -1,9 +1,6 @@
 #!/bin/bash
 # base_installer.sh
 
-# Enable debug mode
-set -x
-
 RELEASE="vivid"  # Version of Ubuntu to use
 POOL_NAME=rpool  # Pool name
 
