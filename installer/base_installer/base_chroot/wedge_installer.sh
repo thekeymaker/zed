@@ -1,9 +1,6 @@
 #!/bin/bash
 locale-gen en_US.UTF-8
 
-# Enable debug mode
-set -x
-
 function check_exit_code()
 {
 	RESULT=$?
@@ -13,11 +10,10 @@ function check_exit_code()
 }
 
 # Parse out all variables 
-SYSNAME=`echo $1 | cut -d'|' -f1`
-HOSTNAME=`echo $1 | cut -d'|' -f2`
-ROOTPASS=`echo $1 | cut -d'|' -f3`
-USERNAME=`echo $1 | cut -d'|' -f4`
-USERPASS=`echo $1 | cut -d'|' -f5`
+HOSTNAME=`echo $1 | cut -d'|' -f1`
+ROOTPASS=`echo $1 | cut -d'|' -f2`
+USERNAME=`echo $1 | cut -d'|' -f3`
+USERPASS=`echo $1 | cut -d'|' -f4`
 
 # Install dbus for next items
 apt-get install --yes dbus
@@ -47,13 +43,13 @@ apt-add-repository --yes ppa:zfs-native/stable
 apt-add-repository --yes ppa:gnome3-team/gnome3-staging
 apt-add-repository --yes ppa:gnome3-team/gnome3
 apt-get update
-apt-get install --yes --no-install-recommends linux-image-generic linux-headers-generic
-apt-get install --yes ubuntu-zfs
-apt-get install --yes grub2-common grub-pc
-apt-get install --yes zfs-initramfs
-apt-get install --yes vim
-apt-get install --yes htop
-apt-get install --yes git
+apt-get install --yes -qq --no-install-recommends linux-image-generic linux-headers-generic
+apt-get install --yes -qq ubuntu-zfs
+apt-get install --yes -qq grub2-common grub-pc
+apt-get install --yes -qq zfs-initramfs
+apt-get install --yes -qq vim
+apt-get install --yes -qq htop
+apt-get install --yes -qq git
 apt-get --yes dist-upgrade
 
 grub-install /dev/sda
@@ -70,7 +66,7 @@ sed -i -e 's/main/main multiverse universe/g' /etc/apt/sources.list
 apt-get update
 
 grep -v '^#' /base_chroot/install_ubuntu_gnome | while read -r line ; do  
-	sudo apt-get install -y -qq $line
+	apt-get install -y -qq $line
 	check_exit_code $line
 done
 
