@@ -127,6 +127,9 @@ mount --bind /sys  /mnt/sys
 HARDDRIVE=`basename ${HARDDRIVE_PATH}`
 ln -s ${HARDDRIVE_PATH}-part3 /dev/${HARDDRIVE}-part3
 
+#Add in HD path for grub-install
+CHROOTVAR+="${HARDDRIVE_PATH}|"
+
 # Copy over install files form base_chroot directory 
 cd $WD
 cp -r ./base_chroot /mnt

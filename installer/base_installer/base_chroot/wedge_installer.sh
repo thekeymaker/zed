@@ -14,6 +14,7 @@ HOSTNAME=`echo $1 | cut -d'|' -f1`
 ROOTPASS=`echo $1 | cut -d'|' -f2`
 USERNAME=`echo $1 | cut -d'|' -f3`
 USERPASS=`echo $1 | cut -d'|' -f4`
+HDPATH=`echo $1 | cut -d'|' -f5`
 
 # Install dbus for next items
 apt-get install --yes dbus
@@ -52,7 +53,7 @@ apt-get install --yes -qq htop
 apt-get install --yes -qq git
 apt-get --yes dist-upgrade
 
-grub-install /dev/sda
+grub-install $HARDDRIVE_PATH
 
 #Fix grub boot parameters
 sed -i '/GRUB_CMDLINE_LINUX_DEFAULT/c\GRUB_CMDLINE_LINUX_DEFAULT="boot=zfs rpool=rpool bootfs=rpool/ROOT"' /etc/default/grub
